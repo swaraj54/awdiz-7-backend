@@ -1,24 +1,17 @@
-import express from 'express'
-import { Login, Register } from './controllers/auth.controllers.js';
+import express from "express";
+import dotenv from "dotenv";
+import AllRoutes from "./routes/index.js";
 const app = express();
+dotenv.config();
 app.use(express.json());
 
-app.post("/", function (req, res) {
-  const { name, email, password } = req.body.userData;
-  console.log(name, email, password)
-  if (name && email && password) {
-    res.send("Data recevied.");
-  } else {
-    res.send("All fields are mandatory.")
-  }
+app.get("/", function (req, res) {
+  res.send("working.");
 });
 
-app.post('/register', Register)
-app.post('/login', Login)
+app.use("/api/v1", AllRoutes);
 
-
-app.get("/hello", function (req, res) {
-  res.send("Hello.");
+app.listen(process.env.PORT_NUMBER, () => {
+  console.log(`Server is running on port ${process.env.PORT_NUMBER}.`);
 });
 
-app.listen(3000);

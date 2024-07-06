@@ -30,3 +30,12 @@ npm start
 
 
 
+'/api/v1" => index.js 
+
+'/user'
+'/admin' = > routes/index.js
+'/product'
+
+'/login' => auth.routes.js
+'/get-product' => product.route.js
+
