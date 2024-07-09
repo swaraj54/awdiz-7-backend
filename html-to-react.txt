@@ -1,0 +1,29 @@
+airbnb - repo 
+home.html
+home.css 
+login.html
+login.css 
+
+
+1. Step - create new repo -> airbnb-client-react 
+
+2. Step - setup routing -> route path element
+
+3. Step - Home.jsx - return ( home.html ) , h-container , r-container
+
+4. Step -> src/styles -> home.css login.css 
+
+
+
+
+Repo -> Puma-react-client 
+setup react 
+setup routing 
+0.1 Navbar -> 11-7
+1. Home -> 11-7
+2. Login/ register -> 11 - 7
+3. Men -> multiple products -> 13-7
+4. Single Product page -> 13-7
+5. Cart -> 16-7
+6. Profile -> 16-7
+7. Order history  -> 18-7
