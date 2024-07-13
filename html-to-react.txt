@@ -17,7 +17,7 @@ login.css
 
 
 Repo -> Puma-react-client 
-setup react 
+setup react                            
 setup routing 
 0.1 Navbar -> 11-7
 1. Home -> 11-7

@@ -39,3 +39,11 @@ npm start
 '/login' => auth.routes.js
 '/get-product' => product.route.js
 
+
+bcrypt 
+hash 
+compare 
+
+jwt 
+sign 
+verify
