@@ -69,10 +69,7 @@ export const Register = async (req, res) => {
     const responseFromDb = await newUser.save();
 
     return res.json({
-      encryptedPassword,
-      isEmailExist,
       success: true,
-      responseFromDb,
       message: "Registeration Successfull.",
     });
   } catch (error) {
@@ -81,11 +78,25 @@ export const Register = async (req, res) => {
   }
 };
 
-
-
-
 /// get-current-user
-// 1. access token from cookie 
+// 1. access token from cookie
 // 2. verify token -> data -> {userId : "121312121"}
-// 3. Check userId in db 
+// 3. Check userId in db
 // 4. return userData / else error
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    // console.log(token, "token");
+    const data = await jwt.verify(token, process.env.JWT_SECRET);
+    console.log(data, "data");
+    const user = await User.findById(data?.userId);
+    if (!user) {
+      return res.json({ success: false });
+    }
+    const userData = { name: user.name, email: user.email };
+    return res.json({ success: true, userData });
+  } catch (error) {
+    return res.json({ success: false, error });
+  }
+};

@@ -2,7 +2,18 @@ import express from "express";
 import dotenv from "dotenv";
 import AllRoutes from "./routes/index.js";
 import mongoose from "mongoose";
+import cors from "cors";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
 const app = express();
+app.use(cookieParser());
+app.use(morgan("combined"));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"],
+  })
+);
 dotenv.config();
 app.use(express.json());
 
