@@ -1,12 +1,17 @@
 import Product from "../models/product.model.js";
 
-export const GetAllProducts = (req, res) => {
-  res.send("all products");
+export const GetAllProducts = async (req, res) => {
+  try {
+    const product = await Product.find({});
+    res.json({ success: true, product });
+  } catch (error) {
+    return res.json({ error, success: false });
+  }
 };
 export const CreateNewProduct = async (req, res) => {
   try {
-    const { name, price, category, quantity } = req.body.productData;
-    if (!name || !price || !category || !quantity) {
+    const { name, price, category, quantity, image } = req.body.productData;
+    if (!name || !price || !category || !quantity || !image) {
       return res.json({ success: false, error: "All fields are required." });
     }
     const isProductExist = await Product.findOne({ name, category });
@@ -19,6 +24,7 @@ export const CreateNewProduct = async (req, res) => {
       price: price,
       category,
       quantity,
+      image,
     });
     await newProduct.save();
 

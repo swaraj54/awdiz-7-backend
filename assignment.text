@@ -2,10 +2,11 @@
 
 React  Frontend
 Add Product page 
-Admin Login page 
-Admin Register Page 
+Admin Login page ✅
+Admin Register Page ✅
 
 Express Backend
-Admin Login controller
-Admin register controller
+Admin Login controller ✅
+Admin register controller ✅
+getCurrentUser controller ✅
 
