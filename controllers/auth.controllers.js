@@ -23,7 +23,11 @@ export const Login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.json({ success: false, error: "Password is wrong." });
     }
-    const userData = { name: isUserExists.name, email: isUserExists.email };
+    const userData = {
+      name: isUserExists.name,
+      email: isUserExists.email,
+      role: "user",
+    };
     // add user data (context), add jwt token,
 
     const token = await jwt.sign(
@@ -96,14 +100,14 @@ export const getCurrentUser = async (req, res) => {
       if (!admin) {
         return res.json({ success: false });
       }
-      const adminData = { name: admin.name, email: admin.email };
+      const adminData = { name: admin.name, email: admin.email, role: "admin" };
       return res.json({ success: true, userData: adminData });
     } else {
       const user = await User.findById(data?.userId);
       if (!user) {
         return res.json({ success: false });
       }
-      const userData = { name: user.name, email: user.email };
+      const userData = { name: user.name, email: user.email, role :  "user" };
       return res.json({ success: true, userData });
     }
   } catch (error) {

@@ -1,6 +1,7 @@
 import Admin from "../models/admin.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
 export const LoginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body?.adminData;
@@ -21,7 +22,11 @@ export const LoginAdmin = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.json({ success: false, error: "Password is wrong." });
     }
-    const adminData = { name: isAdminExists.name, email: isAdminExists.email };
+    const adminData = {
+      name: isAdminExists.name,
+      email: isAdminExists.email,
+      role: "admin",
+    };
     // add user data (context), add jwt token,
 
     const token = await jwt.sign(
