@@ -1,6 +1,7 @@
 import Admin from "../models/admin.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Product from "../models/product.model.js";
 
 export const LoginAdmin = async (req, res) => {
   try {
@@ -26,6 +27,7 @@ export const LoginAdmin = async (req, res) => {
       name: isAdminExists.name,
       email: isAdminExists.email,
       role: "admin",
+      userId: isAdminExists._id,
     };
     // add user data (context), add jwt token,
 
@@ -76,6 +78,17 @@ export const RegisterAdmin = async (req, res) => {
       success: true,
       message: "Registeration Successfull for admin.",
     });
+  } catch (error) {
+    console.log(error, "error");
+    return res.json({ error: error, success: false });
+  }
+};
+
+export const YourAddedProducts = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const products = await Product.find({ creatorId: userId });
+    return res.json({ success: true, products });
   } catch (error) {
     console.log(error, "error");
     return res.json({ error: error, success: false });

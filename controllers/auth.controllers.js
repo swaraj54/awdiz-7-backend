@@ -27,6 +27,7 @@ export const Login = async (req, res) => {
       name: isUserExists.name,
       email: isUserExists.email,
       role: "user",
+      userId : isUserExists._id
     };
     // add user data (context), add jwt token,
 
@@ -100,14 +101,24 @@ export const getCurrentUser = async (req, res) => {
       if (!admin) {
         return res.json({ success: false });
       }
-      const adminData = { name: admin.name, email: admin.email, role: "admin" };
+      const adminData = {
+        name: admin.name,
+        email: admin.email,
+        role: "admin",
+        userId: admin._id,
+      };
       return res.json({ success: true, userData: adminData });
     } else {
       const user = await User.findById(data?.userId);
       if (!user) {
         return res.json({ success: false });
       }
-      const userData = { name: user.name, email: user.email, role :  "user" };
+      const userData = {
+        name: user.name,
+        email: user.email,
+        role: "user",
+        userId: user._id,
+      };
       return res.json({ success: true, userData });
     }
   } catch (error) {
