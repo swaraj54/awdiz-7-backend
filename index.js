@@ -23,6 +23,11 @@ app.get("/", function (req, res) {
 
 app.use("/api/v1", AllRoutes);
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send("Internal Server Error");
+});
+
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected."));

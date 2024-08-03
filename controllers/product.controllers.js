@@ -57,3 +57,30 @@ export const CreateNewProduct = async (req, res) => {
     return res.json({ error: error, success: false });
   }
 };
+
+export const filter = async (req, res) => {
+  try {
+    const { price, price1 } = req.body; // 0 - 1000 price
+    if (!price) {
+      return res.json({ success: false, error: "Price is required." });
+    }
+    // const filteredProducts = await Product.find({ rating: { $exists: false } });
+    // const filteredProducts = await Product.find({
+    //   $or: [{ price: { $gt: 1000 } }, { quantity: { $lte: 20 } }],
+    // });
+    // const filteredProducts = await Product.find({
+    //   price: { $not: { $gt: 1000 } },
+    // });
+    // const filteredProducts = await Product.find({
+    //   $nor : [{ price: { $gt: 1000 } }, { quantity: { $lte: 20 } }],
+    // });
+    const filteredProducts = await Product.find({
+      rating: { $type: "number" },
+    });
+
+    return res.json({ success: true, products: filteredProducts });
+  } catch (error) {
+    console.log(error, "error");
+    return res.json({ error: error, success: false });
+  }
+};
