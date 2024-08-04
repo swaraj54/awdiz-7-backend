@@ -84,3 +84,23 @@ export const filter = async (req, res) => {
     return res.json({ error: error, success: false });
   }
 };
+
+export const agPipeline = async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      // { $match: { $or: [{ price: { $gt: 500 } }, { quantity: { $lt: 30 } }] } },
+      { $match: { price: { $gt: 500 }, quantity: { $lt: 30 } } },
+      {
+        $group: {
+          _id: "$category",
+          totalQuantity: { $sum: "$quantity" },
+          totalPrice: { $sum: { $multiply: ["$quantity", "$price"] } },
+        },
+      },
+    ]);
+    return res.json({ products });
+  } catch (error) {
+    console.log(error, "error");
+    return res.json({ error: error, success: false });
+  }
+};
