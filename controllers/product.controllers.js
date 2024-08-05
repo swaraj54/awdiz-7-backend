@@ -104,3 +104,32 @@ export const agPipeline = async (req, res) => {
     return res.json({ error: error, success: false });
   }
 };
+
+export const agUnwinding = async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      { $unwind: "$tags" },
+      { $project: { name: 1, price: 1 } },
+      // { $project: { creatorId: 0 } },
+    ]);
+    res.json({ success: true, products });
+  } catch (error) {
+    console.log(error, "error");
+    return res.json({ error: error, success: false });
+  }
+};
+
+export const search = async (req, res) => {
+  try {
+    const { searchedWord } = req.body;
+    // apply search on category and tags too. use or operator 
+    const products = await Product.find({
+      name: { $regex: searchedWord, $options: "i" },
+    });
+
+    res.json({ success: true, products });
+  } catch (error) {
+    console.log(error, "error");
+    return res.json({ error: error, success: false });
+  }
+};
