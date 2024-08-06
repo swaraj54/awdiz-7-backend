@@ -51,14 +51,50 @@ export const GetAllCartProducts = async (req, res) => {
     const userId = req.userId;
 
     const cartData = await Cart.findOne({ user: userId });
-    var cartProducts = [];
-    console.log(cartData.cartProducts);
-    for (var i = 0; i <= cartData?.cartProducts?.length - 1; i++) {
-      const response = await Product.findById(cartData?.cartProducts[i]);
-      cartProducts.push(response);
-    }
 
-    return res.json({ success: true, cartProducts });
+    const products = await Product.find({
+      _id: { $in: cartData.cartProducts },
+    });
+
+    const priceData = await Product.aggregate([
+      {
+        $match: {
+          _id: { $in: cartData.cartProducts },
+        },
+      },
+      {
+        $group: {
+          _id: "$category",
+          totalPrice: { $sum: "$price" },
+        },
+      },
+    ]);
+
+    // console.log(priceData, "priceData");
+    // var cartProducts = [];
+    // console.log(cartData.cartProducts);
+    // for (var i = 0; i <= cartData?.cartProducts?.length - 1; i++) {
+    //   const response = await Product.findById(cartData?.cartProducts[i]);
+    //   cartProducts.push(response);
+    // }
+
+    return res.json({
+      success: true,
+      cartProducts: products,
+      totalPrice: priceData[0]?.totalPrice,
+    });
+  } catch (error) {
+    return res.json({ success: false, error });
+  }
+};
+
+export const buyProducts = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    // 1 step ->Add Cart details  into order detials
+    // 2 Step -> remove all product from user cart
+
   } catch (error) {
     return res.json({ success: false, error });
   }

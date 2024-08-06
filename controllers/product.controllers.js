@@ -48,7 +48,7 @@ export const CreateNewProduct = async (req, res) => {
     });
     await newProduct.save();
 
-    return res.json({
+    return res.status(201).json({
       success: true,
       message: "Product successfully created.",
     });
@@ -62,7 +62,7 @@ export const filter = async (req, res) => {
   try {
     const { price, price1 } = req.body; // 0 - 1000 price
     if (!price) {
-      return res.json({ success: false, error: "Price is required." });
+      return res.status(400).json({ success: false, error: "Price is required." });
     }
     // const filteredProducts = await Product.find({ rating: { $exists: false } });
     // const filteredProducts = await Product.find({
@@ -122,14 +122,14 @@ export const agUnwinding = async (req, res) => {
 export const search = async (req, res) => {
   try {
     const { searchedWord } = req.body;
-    // apply search on category and tags too. use or operator 
+    // apply search on category and tags too. use or operator
     const products = await Product.find({
       name: { $regex: searchedWord, $options: "i" },
     });
 
-    res.json({ success: true, products });
+    return res.status(200).json({ success: true, products });
   } catch (error) {
     console.log(error, "error");
-    return res.json({ error: error, success: false });
+    return res.status(500).json({ error: error, success: false });
   }
 };
