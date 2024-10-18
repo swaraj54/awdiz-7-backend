@@ -95,10 +95,9 @@ export const buyProducts = async (req, res) => {
     // 2 Step -> remove all product from user cart
 
     // Step 1.1 Data  =  Cart({user : userId}).populate('name price category quantity creatorId tags image')
-    // Step 1.2 Create new document for order, new Order({user, totalPrice ,products : Data.cartProducts  }) 
+    // Step 1.2 Create new document for order, new Order({user, totalPrice ,products : Data.cartProducts  })
     // Step 1.3 Data.cartProducts = []; await Data.save();
-    // Step 1.4 success send to frontend, 
-
+    // Step 1.4 success send to frontend,
   } catch (error) {
     return res.json({ success: false, error });
   }
@@ -111,7 +110,17 @@ export const getOrderDetails = async (req, res) => {
     // Step 1.5 Create a seperate api to showcase orders. userId
     // Step 1.6 const data = await Order({user})
     // Step 1.7 send data to frontend, map order detials over order page.
+  } catch (error) {
+    return res.json({ success: false, error });
+  }
+};
 
+export const makePayment = async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    
+      
   } catch (error) {
     return res.json({ success: false, error });
   }
